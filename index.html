@@ -24,16 +24,31 @@ opacity: 1;
 </style>
 </head>
 <body>
+<div id="timer">30</div>
 <div id="message"></div>
 
 
 <script>
+const timeout = 120  
+let remaining = timeout;
+const timerEl = document.getElementById("timer");
+
+
+const interval = setInterval(() => {
+remaining--;
+timerEl.textContent = remaining;
+if (remaining <= 0) {
+clearInterval(interval);
+}
+}, 1000);
+
+
 setTimeout(() => {
-const decoded = atob("dGVzdA==");
+const decoded = atob("b3RyNWs2Szk=");
 const el = document.getElementById("message");
 el.textContent = decoded;
 el.classList.add("show");
-}, 30000); // 30 seconds
+}, timeout * 1000);
 </script>
 </body>
 </html>
