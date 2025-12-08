@@ -24,12 +24,15 @@ opacity: 1;
 </style>
 </head>
 <body>
-<div id="message">Hello</div>
+<div id="message"></div>
 
 
 <script>
 setTimeout(() => {
-document.getElementById("message").classList.add("show");
+const decoded = atob("dGVzdA==");
+const el = document.getElementById("message");
+el.textContent = decoded;
+el.classList.add("show");
 }, 30000); // 30 seconds
 </script>
 </body>
