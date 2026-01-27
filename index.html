@@ -6,50 +6,79 @@
 <title>Delayed Hello</title>
 <style>
 body {
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-margin: 0;
-font-family: Arial, sans-serif;
-font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 2rem;
+  gap: 1rem;
 }
+
 #message {
-opacity: 0;
-transition: opacity 1s ease;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 #message.show {
-opacity: 1;
+  opacity: 1;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 </style>
 </head>
 <body>
+
 <div id="timer">30</div>
+<button id="enableBtn" disabled>Enable</button>
 <div id="message"></div>
 
-
 <script>
-const timeout = 120  
+const timeout = 120;
 let remaining = timeout;
-const timerEl = document.getElementById("timer");
 
+const timerEl = document.getElementById("timer");
+const buttonEl = document.getElementById("enableBtn");
+
+let enabled = true;
+
+// keep button state in sync
+function updateButton() {
+  buttonEl.disabled = enabled;
+}
+
+buttonEl.addEventListener("click", () => {
+  enabled = true;
+  updateButton();
+});
 
 const interval = setInterval(() => {
-remaining--;
-timerEl.textContent = remaining;
-if (remaining <= 0) {
-timerEl.textContent = "";
-clearInterval(interval);
-}
+  if (!enabled) return;
+
+  if (remaining % 10 === 0) {
+    enabled = false;
+    updateButton();
+  }
+
+  remaining--;
+  timerEl.textContent = remaining;
+
+  if (remaining <= 0) {
+    timerEl.textContent = "";
+    clearInterval(interval);
+
+    const decoded = atob("b3RyNWs2Szk=");
+    const el = document.getElementById("message");
+    el.textContent = decoded;
+    el.classList.add("show");
+  }
 }, 1000);
 
-
-setTimeout(() => {
-const decoded = atob("b3RyNWs2Szk=");
-const el = document.getElementById("message");
-el.textContent = decoded;
-el.classList.add("show");
-}, timeout * 1000);
+updateButton();
 </script>
 </body>
 </html>
