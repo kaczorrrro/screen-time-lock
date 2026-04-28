@@ -38,7 +38,7 @@ button:disabled {
 <div id="message"></div>
 
 <script>
-const timeout = 120;
+const timeout = 180;
 let remaining = timeout;
 
 const timerEl = document.getElementById("timer");
@@ -71,7 +71,7 @@ const interval = setInterval(() => {
     timerEl.textContent = "";
     clearInterval(interval);
 
-    const decoded = atob("b3RyNWs2Szk=");
+    const decoded = atob("V3glOEReZG1eRlVoQUFIb3RyNWs=");
     const el = document.getElementById("message");
     el.textContent = decoded;
     el.classList.add("show");
