@@ -33,8 +33,9 @@ button:disabled {
 </head>
 <body>
 
-<div id="location">Requesting current position...</div>
+<div id="location">Tap Start to request current position.</div>
 <div id="timer"></div>
+<button id="startBtn">Start</button>
 <button id="enableBtn" disabled>Enable</button>
 <div id="message"></div>
 
@@ -44,6 +45,7 @@ let remaining = timeout;
 
 const locationEl = document.getElementById("location");
 const timerEl = document.getElementById("timer");
+const startButtonEl = document.getElementById("startBtn");
 const buttonEl = document.getElementById("enableBtn");
 
 let enabled = true;
@@ -246,7 +248,7 @@ function showPositionBeforeTimer() {
         resolve();
       },
       (error) => {
-        locationEl.textContent = `Position failed: ${error.message}`;
+        locationEl.textContent = `Position failed: ${error.message} | Timer skipped: no`;
         resolve();
       },
     );
@@ -280,7 +282,11 @@ function startTimer() {
 }
 
 updateButton();
-showPositionBeforeTimer().then(startTimer);
+startButtonEl.addEventListener("click", () => {
+  startButtonEl.disabled = true;
+  locationEl.textContent = "Requesting current position...";
+  showPositionBeforeTimer().then(startTimer);
+});
 </script>
 </body>
 </html>
